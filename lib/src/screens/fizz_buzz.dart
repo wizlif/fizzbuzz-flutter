@@ -55,7 +55,9 @@ class _FizzBuzzState extends State<FizzBuzz> {
                 default:
                   if(snapshot.hasData){
                     List<GameSession> sessions = snapshot.data;
-                     return ListView.builder(itemBuilder: (ctx,index){
+                     return ListView.separated(
+                     separatorBuilder: (ctx,index)=> Divider(),
+                     itemBuilder: (ctx,index){
                        GameSession session = sessions[index];
                        return ListTile(
                          title: Text("User ${session.username}:${session.state}"),
