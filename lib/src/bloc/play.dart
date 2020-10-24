@@ -26,6 +26,13 @@ class PlayBloc implements Bloc {
 
   Function(int) get setId => _id.sink.add;
 
+  final _error = BehaviorSubject<String>();
+
+  Stream<String> get error =>_error.stream;
+
+  Function(String) get setError => _error.sink.add;
+
+
 
   int user_id;
 
@@ -37,6 +44,7 @@ class PlayBloc implements Bloc {
       _gameSessions = _joinResponse.previousSessions;
       setGameSessions(_gameSessions);
     } catch (e) {
+      setError(e.toString());
       return Future.error(e);
     }
   }
@@ -47,6 +55,7 @@ class PlayBloc implements Bloc {
       _gameSessions.add(_playResponse);
       setGameSessions(_gameSessions);
     } catch (e) {
+      setError(e.toString());
       return Future.error(e);
     }
   }
@@ -66,5 +75,6 @@ class PlayBloc implements Bloc {
     _loading.close();
     _sessions.close();
     _id.close();
+    _error.close();
   }
 }
